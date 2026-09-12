@@ -1,0 +1,663 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LN Mishra College | Student Portal</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, sans-serif}
+:root{
+ --primary:#635bff;--secondary:#8b5cf6;--bg:#f4f6fc;
+ --card:#fff;--text:#182033;--muted:#777f95;
+ --border:#e3e6f0;--input:#f8f9fd
+}
+body.dark{
+ --bg:#0d1120;--card:#181d31;--text:#f4f5ff;
+ --muted:#a8aec4;--border:#30364e;--input:#101526
+}
+body{background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.theme{
+ position:fixed;right:22px;top:20px;z-index:10;
+ width:43px;height:43px;border-radius:50%;
+ border:1px solid var(--border);background:var(--card);
+ color:var(--text);font-size:19px
+}
+
+/* AUTH PAGE */
+.auth{
+ min-height:100vh;display:grid;grid-template-columns:1fr 1fr
+}
+.hero{
+ padding:60px 10%;display:flex;flex-direction:column;
+ justify-content:center;color:white;
+ background:linear-gradient(135deg,#25245b,#635bff,#9365ed);
+ position:relative;overflow:hidden
+}
+.hero:after{
+ content:"";position:absolute;width:430px;height:430px;
+ border:1px solid #ffffff30;border-radius:50%;
+ right:-210px;top:-150px
+}
+.logo-box{
+ width:72px;height:72px;background:#ffffff20;
+ border:1px solid #ffffff45;border-radius:20px;
+ display:grid;place-items:center;font-size:34px;margin-bottom:25px
+}
+.hero h1{font-size:clamp(30px,4vw,49px);line-height:1.15}
+.hero h1 span{color:#ddd9ff}
+.hero p{font-size:14px;line-height:1.9;color:#e5e5ff;
+ max-width:470px;margin-top:23px}
+.features{list-style:none;margin-top:28px;display:grid;gap:15px}
+.features li{font-size:14px;display:flex;gap:10px;align-items:center}
+.features b{
+ display:grid;place-items:center;background:#ffffff20;
+ width:28px;height:28px;border-radius:50%
+}
+.auth-area{display:flex;align-items:center;justify-content:center;padding:45px 8%}
+.auth-card{width:100%;max-width:440px}
+.brand{color:var(--primary);font-weight:bold;font-size:14px;margin-bottom:27px}
+.brand span{font-size:24px;margin-right:8px}
+.heading h2{font-size:30px;margin-bottom:10px}
+.heading p{color:var(--muted);font-size:14px;margin-bottom:27px}
+.form-group{margin-bottom:16px}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:8px}
+.input{
+ width:100%;padding:14px;border:1px solid var(--border);
+ border-radius:11px;background:var(--input);color:var(--text);
+ outline:none;font-size:14px
+}
+.input:focus{border-color:var(--primary);box-shadow:0 0 0 3px #635bff18}
+.password{position:relative}
+.password .input{padding-right:48px}
+.eye{
+ position:absolute;right:10px;top:9px;background:transparent;
+ border:0;color:var(--muted);font-size:18px;padding:5px
+}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.remember{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.link{color:var(--primary);font-weight:bold;cursor:pointer;font-size:13px}
+.main-btn{
+ width:100%;padding:15px;border:0;border-radius:11px;
+ color:white;font-weight:bold;background:linear-gradient(110deg,var(--primary),var(--secondary));
+ transition:.2s
+}
+.main-btn:hover{transform:translateY(-2px);opacity:.92}
+.switch{text-align:center;color:var(--muted);font-size:13px;margin-top:23px}
+.message{padding:12px;border-radius:10px;font-size:13px;margin-bottom:17px;line-height:1.5}
+.success{background:#16a34a18;color:#16a34a;border:1px solid #16a34a35}
+.error{background:#ef444418;color:#ef4444;border:1px solid #ef444435}
+.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:20px;
+ padding:12px;border:1px dashed var(--border);border-radius:10px}
+
+/* DASHBOARD */
+.dashboard{min-height:100vh}
+.navbar{
+ background:var(--card);border-bottom:1px solid var(--border);
+ padding:17px 5%;display:flex;justify-content:space-between;
+ align-items:center;gap:15px
+}
+.nav-brand{display:flex;align-items:center;gap:11px}
+.nav-icon{
+ width:43px;height:43px;display:grid;place-items:center;
+ background:linear-gradient(135deg,var(--primary),var(--secondary));
+ border-radius:12px;color:white;font-size:22px
+}
+.nav-brand h3{font-size:14px}
+.nav-brand small{color:var(--muted);font-size:11px}
+.nav-right{display:flex;align-items:center;gap:14px}
+.user{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:bold}
+.avatar{
+ width:35px;height:35px;border-radius:50%;display:grid;
+ place-items:center;background:var(--primary);color:white
+}
+.logout{
+ background:transparent;border:1px solid var(--border);
+ color:var(--text);border-radius:9px;padding:10px 14px;font-size:12px
+}
+.container{max-width:1200px;margin:auto;padding:42px 5%}
+.welcome{margin-bottom:28px}
+.welcome small{color:var(--primary);font-weight:bold;font-size:12px}
+.welcome h1{font-size:clamp(25px,4vw,37px);margin-top:10px}
+.welcome h1 span{color:var(--primary)}
+.welcome p{color:var(--muted);font-size:13px;margin-top:9px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-bottom:25px}
+.stat{
+ background:var(--card);border:1px solid var(--border);
+ border-radius:15px;padding:21px;display:flex;gap:13px;align-items:center
+}
+.stat-icon{font-size:25px;background:#635bff15;padding:12px;border-radius:12px}
+.stat h3{font-size:21px;margin-bottom:5px}
+.stat p{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:1.35fr 1fr;gap:22px}
+.panel{
+ background:var(--card);border:1px solid var(--border);
+ border-radius:16px;padding:26px
+}
+.panel-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.panel-title h2{font-size:19px}
+.panel p{color:var(--muted);font-size:13px;line-height:1.9}
+.details{margin-top:20px;display:grid;gap:12px}
+.detail{
+ display:flex;gap:12px;padding:13px;background:var(--input);
+ border-radius:10px;font-size:13px
+}
+.detail strong{display:block;font-size:12px;margin-bottom:5px}
+.detail small{color:var(--muted);line-height:1.5}
+.notice{
+ background:#635bff12;border-left:3px solid var(--primary);
+ padding:14px;border-radius:8px;font-size:12px;line-height:1.7;margin-top:18px
+}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+
+/* ANIMATIONS */
+.auth-card,.panel,.stat{animation:fade .5s ease}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:850px){
+ .auth{grid-template-columns:1fr}
+ .hero{padding:45px 8%;min-height:370px}
+ .auth-area{padding:40px 8%}
+ .grid{grid-template-columns:1fr}
+}
+@media(max-width:550px){
+ .hero{padding:40px 25px;min-height:auto}
+ .hero h1{font-size:32px}
+ .hero p{font-size:13px}
+ .features{gap:12px}
+ .auth-area{padding:35px 22px}
+ .theme{right:15px;top:15px}
+ .stats{grid-template-columns:1fr}
+ .container{padding:30px 20px}
+ .navbar{padding:14px 20px}
+ .nav-brand h3{font-size:11px}
+ .nav-brand small{font-size:9px}
+ .user{display:none}
+ .panel{padding:21px}
+}
+</style>
+</head>
+
+<body>
+
+<button class="theme" id="themeBtn" aria-label="Toggle theme">🌙</button>
+
+<!-- LOGIN AND REGISTRATION -->
+<section class="auth" id="authPage">
+
+<div class="hero">
+ <div class="logo-box">🎓</div>
+ <h1>LN MISHRA<br><span>Student Portal</span></h1>
+ <p>
+ Welcome to LN MISHRA COLLEGE OF BUSINESS MANAGEMENT.
+ Access your student portal, manage your profile and explore
+ your college information from one place.
+ </p>
+ <ul class="features">
+  <li><b>✓</b> Secure-style student login interface</li>
+  <li><b>✓</b> Easy student registration</li>
+  <li><b>✓</b> Course and department details</li>
+  <li><b>✓</b> Modern responsive dashboard</li>
+ </ul>
+</div>
+
+<div class="auth-area">
+<div class="auth-card">
+
+<!-- LOGIN -->
+<div id="loginBox">
+ <div class="brand">🎓 &nbsp; LN MISHRA COLLEGE</div>
+ <div class="heading">
+  <h2>Student Login 🔐</h2>
+  <p>Login to access your student dashboard.</p>
+ </div>
+
+ <div id="loginMsg" class="message hidden"></div>
+
+ <form id="loginForm">
+  <div class="form-group">
+   <label for="loginId">Student ID / Email</label>
+   <input class="input" id="loginId" type="text"
+    placeholder="Enter student ID or email" required>
+  </div>
+
+  <div class="form-group">
+   <label for="loginPass">Password</label>
+   <div class="password">
+    <input class="input" id="loginPass" type="password"
+     placeholder="Enter your password" required>
+    <button type="button" class="eye" data-input="loginPass">👁️</button>
+   </div>
+  </div>
+
+  <div class="row" style="margin:5px 0 23px">
+   <label class="remember">
+    <input type="checkbox" id="remember"> Remember me
+   </label>
+   <span class="link" id="forgot">Forgot Password?</span>
+  </div>
+
+  <button class="main-btn" type="submit">Login to Portal →</button>
+ </form>
+
+ <p class="switch">
+  New student?
+  <span class="link" id="toRegister"> Create an account</span>
+ </p>
+
+ <div class="note">
+  <b>Demo:</b> New student registration karein, phir Student ID
+  ya Email aur Password se login karein.
+ </div>
+</div>
+
+<!-- REGISTRATION -->
+<div id="registerBox" class="hidden">
+ <div class="brand">🎓 &nbsp; LN MISHRA COLLEGE</div>
+ <div class="heading">
+  <h2>New Student 🆕</h2>
+  <p>Create your student portal account.</p>
+ </div>
+
+ <div id="registerMsg" class="message hidden"></div>
+
+ <form id="registerForm">
+  <div class="form-group">
+   <label for="name">Student Full Name</label>
+   <input class="input" id="name" type="text"
+    placeholder="Enter full name" maxlength="80" required>
+  </div>
+
+  <div class="form-group">
+   <label for="email">Email Address</label>
+   <input class="input" id="email" type="email"
+    placeholder="Enter email address" maxlength="120" required>
+  </div>
+
+  <div class="form-group">
+   <label for="mobile">Mobile Number</label>
+   <input class="input" id="mobile" type="tel"
+    placeholder="Enter 10-digit mobile number"
+    pattern="[6-9][0-9]{9}" maxlength="10" required>
+  </div>
+
+  <div class="form-group">
+   <label for="department">Course / Department</label>
+   <select class="input" id="department" required>
+    <option value="">Select Course / Department</option>
+    <option>BBA - Bachelor of Business Administration</option>
+    <option>BCA - Bachelor of Computer Applications</option>
+    <option>MBA - Master of Business Administration</option>
+    <option>B.Com - Bachelor of Commerce</option>
+    <option>Other Department</option>
+   </select>
+  </div>
+
+  <div class="form-group">
+   <label for="studentId">Student ID</label>
+   <input class="input" id="studentId" type="text"
+    placeholder="Enter your college student ID" maxlength="40" required>
+  </div>
+
+  <div class="form-group">
+   <label for="password">Create Password</label>
+   <div class="password">
+    <input class="input" id="password" type="password"
+     placeholder="Minimum 6 characters" minlength="6" required>
+    <button type="button" class="eye" data-input="password">👁️</button>
+   </div>
+  </div>
+
+  <div class="form-group">
+   <label for="confirm">Confirm Password</label>
+   <div class="password">
+    <input class="input" id="confirm" type="password"
+     placeholder="Re-enter password" minlength="6" required>
+    <button type="button" class="eye" data-input="confirm">👁️</button>
+   </div>
+  </div>
+
+  <button class="main-btn" type="submit">Register Student →</button>
+ </form>
+
+ <p class="switch">
+  Already registered?
+  <span class="link" id="toLogin"> Login here</span>
+ </p>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="dashboard hidden" id="dashboard">
+
+<header class="navbar">
+ <div class="nav-brand">
+  <div class="nav-icon">🎓</div>
+  <div>
+   <h3>LN MISHRA COLLEGE</h3>
+   <small>Student Management Portal</small>
+  </div>
+ </div>
+
+ <div class="nav-right">
+  <div class="user">
+   <div class="avatar" id="avatar">S</div>
+   <span id="navName">Student</span>
+  </div>
+  <button class="logout" id="logout">🚪 Logout</button>
+ </div>
+</header>
+
+<main class="container">
+ <div class="welcome">
+  <small>STUDENT DASHBOARD</small>
+  <h1>Welcome, <span id="welcomeName">Student</span> 👋</h1>
+  <p>Your student portal is ready. View your profile and college information.</p>
+ </div>
+
+ <div class="stats">
+  <div class="stat">
+   <div class="stat-icon">🎓</div>
+   <div><h3>Active</h3><p>Student Status</p></div>
+  </div>
+  <div class="stat">
+   <div class="stat-icon">📚</div>
+   <div><h3 id="courseShort">—</h3><p>Course / Department</p></div>
+  </div>
+  <div class="stat">
+   <div class="stat-icon">✅</div>
+   <div><h3>Verified</h3><p>Demo Portal Account</p></div>
+  </div>
+ </div>
+
+ <div class="grid">
+  <article class="panel">
+   <div class="panel-title">
+    <h2>🏫 About Our College</h2>
+    <span>🎓</span>
+   </div>
+   <p>
+    <b>LN MISHRA COLLEGE OF BUSINESS MANAGEMENT</b> is an
+    institution focused on business management education,
+    academic learning and the overall development of students.
+   </p>
+   <p style="margin-top:13px">
+    The college aims to support students in developing their
+    knowledge, professional skills and understanding of
+    management and related academic subjects.
+   </p>
+
+   <div class="details">
+    <div class="detail">
+     <span>🏛️</span>
+     <div><strong>College Name</strong>
+     <small>LN MISHRA COLLEGE OF BUSINESS MANAGEMENT</small></div>
+    </div>
+    <div class="detail">
+     <span>📍</span>
+     <div><strong>Location</strong>
+     <small>Muzaffarpur, Bihar, India</small></div>
+    </div>
+    <div class="detail">
+     <span>📖</span>
+     <div><strong>Academic Focus</strong>
+     <small>Business Management and Higher Education</small></div>
+    </div>
+   </div>
+  </article>
+
+  <aside class="panel">
+   <div class="panel-title">
+    <h2>👤 Student Profile</h2>
+    <span>📝</span>
+   </div>
+
+   <div class="details">
+    <div class="detail">
+     <span>🆔</span>
+     <div><strong>Student ID</strong>
+     <small id="profileId">—</small></div>
+    </div>
+    <div class="detail">
+     <span>👤</span>
+     <div><strong>Full Name</strong>
+     <small id="profileName">—</small></div>
+    </div>
+    <div class="detail">
+     <span>✉️</span>
+     <div><strong>Email</strong>
+     <small id="profileEmail">—</small></div>
+    </div>
+    <div class="detail">
+     <span>📱</span>
+     <div><strong>Mobile Number</strong>
+     <small id="profileMobile">—</small></div>
+    </div>
+    <div class="detail">
+     <span>🎓</span>
+     <div><strong>Course / Department</strong>
+     <small id="profileDepartment">—</small></div>
+    </div>
+   </div>
+
+   <div class="notice">
+    💡 <b>Student Notice</b><br>
+    This is a demo portal. Official attendance, results,
+    notices and other college services can be added after
+    connecting a secure college backend.
+   </div>
+  </aside>
+ </div>
+</main>
+
+<footer>
+ © 2026 LN MISHRA COLLEGE OF BUSINESS MANAGEMENT · Student Portal
+</footer>
+</section>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+// Theme
+const savedTheme = localStorage.getItem("lnTheme");
+if(savedTheme === "dark"){
+ document.body.classList.add("dark");
+ $("themeBtn").textContent = "☀️";
+}
+$("themeBtn").addEventListener("click",()=>{
+ document.body.classList.toggle("dark");
+ const dark = document.body.classList.contains("dark");
+ $("themeBtn").textContent = dark ? "☀️" : "🌙";
+ localStorage.setItem("lnTheme",dark ? "dark" : "light");
+});
+
+// Messages
+function message(id,text,type){
+ const box=$(id);
+ box.textContent=text;
+ box.className="message "+type;
+}
+function clearMessage(id){
+ $(id).textContent="";
+ $(id).className="message hidden";
+}
+
+// Page switching
+$("toRegister").addEventListener("click",()=>{
+ $("loginBox").classList.add("hidden");
+ $("registerBox").classList.remove("hidden");
+ clearMessage("loginMsg");
+ clearMessage("registerMsg");
+});
+$("toLogin").addEventListener("click",()=>{
+ $("registerBox").classList.add("hidden");
+ $("loginBox").classList.remove("hidden");
+ clearMessage("loginMsg");
+ clearMessage("registerMsg");
+});
+
+// Show/hide password
+document.querySelectorAll(".eye").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  const input=$(btn.dataset.input);
+  if(input.type==="password"){
+   input.type="text";
+   btn.textContent="🙈";
+  }else{
+   input.type="password";
+   btn.textContent="👁️";
+  }
+ });
+});
+
+// Read students
+function getStudents(){
+ try{
+  return JSON.parse(localStorage.getItem("lnStudents")||"[]");
+ }catch(error){
+  return [];
+ }
+}
+function saveStudents(students){
+ localStorage.setItem("lnStudents",JSON.stringify(students));
+}
+
+// Registration
+$("registerForm").addEventListener("submit",event=>{
+ event.preventDefault();
+
+ const name=$("name").value.trim();
+ const email=$("email").value.trim().toLowerCase();
+ const mobile=$("mobile").value.trim();
+ const department=$("department").value;
+ const studentId=$("studentId").value.trim().toUpperCase();
+ const password=$("password").value;
+ const confirm=$("confirm").value;
+
+ if(name.length<2){
+  message("registerMsg","Please enter a valid student name.","error");
+  return;
+ }
+ if(!/^[6-9][0-9]{9}$/.test(mobile)){
+  message("registerMsg","Please enter a valid 10-digit mobile number.","error");
+  return;
+ }
+ if(password.length<6){
+  message("registerMsg","Password must contain at least 6 characters.","error");
+  return;
+ }
+ if(password!==confirm){
+  message("registerMsg","Password and Confirm Password do not match.","error");
+  return;
+ }
+
+ const students=getStudents();
+
+ if(students.some(s=>s.email===email)){
+  message("registerMsg","This email is already registered.","error");
+  return;
+ }
+ if(students.some(s=>s.studentId===studentId)){
+  message("registerMsg","This Student ID is already registered.","error");
+  return;
+ }
+
+ const student={
+  name,email,mobile,department,studentId,password
+ };
+
+ students.push(student);
+ saveStudents(students);
+
+ $("registerForm").reset();
+ message("registerMsg","Registration successful! You can now login.","success");
+
+ setTimeout(()=>{
+  $("registerBox").classList.add("hidden");
+  $("loginBox").classList.remove("hidden");
+  $("loginId").value=studentId;
+  clearMessage("registerMsg");
+ },1000);
+});
+
+// Login
+$("loginForm").addEventListener("submit",event=>{
+ event.preventDefault();
+
+ const loginId=$("loginId").value.trim().toLowerCase();
+ const password=$("loginPass").value;
+
+ const student=getStudents().find(s=>
+  (s.email.toLowerCase()===loginId ||
+   s.studentId.toLowerCase()===loginId) &&
+  s.password===password
+ );
+
+ if(!student){
+  message("loginMsg","Invalid Student ID/Email or Password.","error");
+  return;
+ }
+
+ if($("remember").checked){
+  localStorage.setItem("lnRemember",loginId);
+ }else{
+  localStorage.removeItem("lnRemember");
+ }
+
+ openDashboard(student);
+});
+
+// Forgot password demo
+$("forgot").addEventListener("click",()=>{
+ message("loginMsg",
+ "Demo mode: Password recovery ke liye secure backend aur email verification zaroori hai.",
+ "error");
+});
+
+// Dashboard
+function openDashboard(student){
+ $("authPage").classList.add("hidden");
+ $("dashboard").classList.remove("hidden");
+
+ $("welcomeName").textContent=student.name;
+ $("navName").textContent=student.name;
+ $("avatar").textContent=student.name.charAt(0).toUpperCase();
+
+ $("courseShort").textContent=student.department.split(" - ")[0];
+
+ $("profileId").textContent=student.studentId;
+ $("profileName").textContent=student.name;
+ $("profileEmail").textContent=student.email;
+ $("profileMobile").textContent=student.mobile;
+ $("profileDepartment").textContent=student.department;
+
+ window.scrollTo(0,0);
+}
+
+// Logout
+$("logout").addEventListener("click",()=>{
+ $("dashboard").classList.add("hidden");
+ $("authPage").classList.remove("hidden");
+ $("loginForm").reset();
+ clearMessage("loginMsg");
+ window.scrollTo(0,0);
+});
+
+// Remembered ID
+const remembered=localStorage.getItem("lnRemember");
+if(remembered){
+ $("loginId").value=remembered;
+ $("remember").checked=true;
+}
+</script>
+</body>
+</html>
